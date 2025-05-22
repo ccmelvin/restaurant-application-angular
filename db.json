@@ -15,6 +15,14 @@
       "email": "selection@abc.com",
       "services": "chai",
       "mobile": 78941252511
+    },
+    {
+      "id": 3,
+      "name": "cassiamelvin@gmail.com",
+      "address": "11119 Carpentsdsdsder",
+      "email": "cassiamelvin@gmail.com",
+      "services": "comida brasileira",
+      "mobile": 1111111111
     }
   ],
   "signup": [
@@ -31,6 +39,13 @@
       "mobile": 3164631649,
       "password": "passowrd@123",
       "id": 2
+    },
+    {
+      "name": "aa",
+      "email": "cassia",
+      "mobile": 9881112233,
+      "password": "m5VvMzqSNUaVefJ",
+      "id": 3
     }
   ],
   "comments": [],

@@ -47,7 +47,7 @@ export class RestaurentDashComponent implements OnInit {
       alert("Restaurent Added Successfully");
       this.formValue.reset();
 
-      let ref= document.getElementById('close');
+      let ref= document.getElementById('clear');
       ref?.click();
 
       this.getAllData();
@@ -98,7 +98,7 @@ export class RestaurentDashComponent implements OnInit {
       alert("Restaurent Updated Successfully");
       this.formValue.reset();
 
-      let ref= document.getElementById('close');
+      let ref= document.getElementById('clear');
       ref?.click();
 
       this.getAllData();
