@@ -62,6 +62,65 @@ This document outlines the step-by-step process followed to migrate the Restaura
 
 ## 5. UI Migration
 
+### Wireframes and UI Comparison
+
+#### Angular Version (Original)
+
+```text
+┌─────────────────────────────┐
+│ Restaurant App    [Logout]  │
+├─────────────────────────────┤
+│                             │
+│ [+ Add Restaurant]          │
+│ ┌────────────────────────┐  │
+│ │ Restaurant List        │  │
+│ │ ┌──────┬──────┬─────┐  │  │
+│ │ │ Name │ Info │ Act │  │  │
+│ │ ├──────┼──────┼─────┤  │  │
+│ │ │      │      │ E D │  │  │
+│ │ └──────┴──────┴─────┘  │  │
+│ └────────────────────────┘  │
+└─────────────────────────────┘
+```
+
+#### Next.js Version (Migrated)
+
+```text
+┌─────────────────────────────┐
+│ Restaurant Record App       │
+│ [Add Restaurant] [Logout]   │
+├─────────────────────────────┤
+│ ┌─────────────────────────┐ │
+│ │ Restaurant Records      │ │
+│ │ Management System       │ │
+│ │ [Source Code]           │ │
+│ └─────────────────────────┘ │
+│ ┌─────────────────────────┐ │
+│ │ ID│Name│Email│Phone│Act │ │
+│ ├─────────────────────────┤ │
+│ │  │    │     │     │E D  │ │
+│ └─────────────────────────┘ │
+└─────────────────────────────┘
+```
+
+### UI Component Mapping
+
+```text
+Angular                  Next.js
+┌──────────────┐        ┌──────────────┐
+│ app.module   │───────▶│ app/         │
+│ components/  │        │ components/  │
+└──────────────┘        └──────────────┘
+
+┌──────────────┐        ┌──────────────┐
+│ auth.guard   │───────▶│ middleware   │
+└──────────────┘        └──────────────┘
+
+┌──────────────┐        ┌──────────────┐
+│ services/    │───────▶│ lib/api      │
+└──────────────┘        └──────────────┘
+```
+
 ### Bootstrap Integration
 
 - Added Bootstrap CSS to maintain the same look and feel
@@ -73,6 +132,36 @@ This document outlines the step-by-step process followed to migrate the Restaura
 - Used Bootstrap classes to match the Angular UI
 - Maintained the same color scheme and layout
 - Ensured consistent styling across components
+
+### Interactive Elements
+
+Modal Forms:
+
+```text
+┌────────────────────┐
+│ Add/Edit Record [x]│
+├────────────────────┤
+│ Name: [        ]   │
+│ Email:[        ]   │
+│ Phone:[        ]   │
+│                    │
+│ [Cancel] [Submit]  │
+└────────────────────┘
+```
+
+Responsive Navigation:
+
+```text
+Desktop: Full navbar with buttons
+┌────────────────────────┐
+│ Logo   [Add] [Logout]  │
+└────────────────────────┘
+
+Mobile: Collapsed menu
+┌────────────────┐
+│ Logo      ≡    │
+└────────────────┘
+```
 
 ## 6. Authentication Flow
 

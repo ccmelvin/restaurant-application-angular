@@ -1,36 +1,114 @@
 # Migration Plan: Angular Restaurant App to Next.js with Tailwind CSS
 
-## 1. Setup Next.js Project
+## 1. UI/UX Migration Planning
+
+### Component Mapping and Wireframes
+
+#### Authentication Flow
+```
+┌─ Login ──────────┐  ┌─ Signup ─────────┐
+│ ┌──────────────┐ │  │ ┌──────────────┐ │
+│ │   Email      │ │  │ │    Name      │ │
+│ └──────────────┘ │  │ └──────────────┘ │
+│ ┌──────────────┐ │  │ ┌──────────────┐ │
+│ │   Password   │ │  │ │    Email     │ │
+│ └──────────────┘ │  │ └──────────────┘ │
+│ [     Login    ] │  │ ┌──────────────┐ │
+│ [    Sign Up   ] │  │ │   Password   │ │
+└─────────────────┘  │ └──────────────┘ │
+                     │ [    Submit    ]  │
+                     └─────────────────┘
+```
+
+#### Restaurant Dashboard
+```
+┌─ Navigation Bar ───────────────────────┐
+│ Restaurant App    [Add New] [Logout]   │
+├─────────────────────────────────────────┤
+│ ┌─ Restaurant Table ─────────────────┐ │
+│ │ ID│Name│Email│Address│Phone│Actions│ │
+│ ├───┼────┼─────┼───────┼─────┼───────┤ │
+│ │ 1 │    │     │       │     │[E][D] │ │
+│ │ 2 │    │     │       │     │[E][D] │ │
+│ └───────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+```
+
+#### Restaurant Form Modal
+```
+┌─ Add/Edit Restaurant ─[x]─┐
+│ ┌─────────────────────┐   │
+│ │ Restaurant Name     │   │
+│ └─────────────────────┘   │
+│ ┌─────────────────────┐   │
+│ │ Email Address       │   │
+│ └─────────────────────┘   │
+│ ┌─────────────────────┐   │
+│ │ Phone Number        │   │
+│ └─────────────────────┘   │
+│ ┌─────────────────────┐   │
+│ │ Address             │   │
+│ └─────────────────────┘   │
+│ ┌─────────────────────┐   │
+│ │ Services            │   │
+│ └─────────────────────┘   │
+│                           │
+│ [Cancel]    [Save]       │
+└───────────────────────────┘
+```
+
+### User Flow Diagrams
+
+```
+Login Flow:
+┌─────────┐     ┌──────────┐     ┌───────────┐
+│  Login  │────▶│ Validate │────▶│ Dashboard │
+└─────────┘     └──────────┘     └───────────┘
+     ▲               │
+     │               ▼
+┌─────────┐     ┌──────────┐
+│ Sign Up │     │  Error   │
+└─────────┘     └──────────┘
+
+Restaurant CRUD Flow:
+┌─────────┐     ┌──────────┐     ┌───────────┐
+│  List   │────▶│   Add    │────▶│   Save    │
+└─────────┘     └──────────┘     └───────────┘
+     │               │                  │
+     ▼               ▼                  ▼
+┌─────────┐     ┌──────────┐     ┌───────────┐
+│  Edit   │     │  Delete  │     │  Refresh  │
+└─────────┘     └──────────┘     └───────────┘
+```
+
+## 2. Setup Next.js Project
 
 ```bash
 npx create-next-app@latest restaurant-app-next
 ```
 
 Select the following options:
-
 - TypeScript: Yes
 - ESLint: Yes
 - Tailwind CSS: Yes
 - App Router: Yes
 - Import alias: Yes (use @/ as the prefix)
 
-## 2. Data Structure Migration
+## 3. Data Structure Migration
 
 Create a data layer that mimics your current JSON server setup:
 
 1. Install required packages:
-
 ```bash
 npm install json-server
 ```
 
-1. Keep your existing `db.json` file
+2. Keep your existing `db.json` file
 
-## 3. Component Structure
+## 4. Component Structure
 
 Create the following directory structure:
-
-``` bash
+```bash
 /app
   /page.tsx (Home/Login page)
   /signup/page.tsx
@@ -48,10 +126,9 @@ Create the following directory structure:
   /types.ts (TypeScript interfaces)
 ```
 
-## 4. API Routes Implementation
+## 5. API Routes Implementation
 
 Create API routes in `/app/api`:
-
 ```bash
 /app/api
   /auth
@@ -62,49 +139,35 @@ Create API routes in `/app/api`:
     /[id]/route.ts (GET, PUT, DELETE)
 ```
 
-## 5. Authentication Implementation
+## 6. Authentication Implementation
 
 1. Install authentication packages:
-
 ```bash
 npm install next-auth
 ```
 
-1. Configure Next-Auth in `/app/api/auth/[...nextauth]/route.ts`
+2. Configure Next-Auth in `/app/api/auth/[...nextauth]/route.ts`
 
-## 6. UI Migration with Tailwind
+## 7. UI Migration with Tailwind
 
 1. Create reusable UI components with Tailwind classes
 2. Implement responsive design using Tailwind's utility classes
 
-## 7. State Management
+## 8. State Management
 
 1. Use React Context or a lightweight state management solution:
-
 ```bash
 npm install zustand
 ```
 
-## 8. Migration Steps
-
-1. Start with core data models and types
-2. Implement API routes
-3. Create authentication flow
-4. Build UI components
-5. Connect components to API
-6. Add form validation
-7. Implement routing and navigation
-8. Add error handling and loading states
-
 ## 9. Testing
 
 1. Install testing libraries:
-
 ```bash
 npm install jest @testing-library/react @testing-library/jest-dom
 ```
 
-1. Configure Jest in `jest.config.js`
+2. Configure Jest in `jest.config.js`
 
 ## 10. Deployment
 
@@ -115,7 +178,6 @@ npm install jest @testing-library/react @testing-library/jest-dom
 ## Sample Code for Key Components
 
 ### Restaurant Type Definition (lib/types.ts)
-
 ```typescript
 export interface Restaurant {
   id?: number;
@@ -136,7 +198,6 @@ export interface User {
 ```
 
 ### API Service (lib/api.ts)
-
 ```typescript
 import { Restaurant, User } from './types';
 
